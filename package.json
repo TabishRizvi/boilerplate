@@ -4,7 +4,13 @@
   "description": "boilerplate project for expressjs",
   "main": "app.js",
   "scripts": {
+    "start_live": "NODE_ENV=live node app.js"
   },
   "author": "Tabish Rizvi",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "config": "^1.21.0",
+    "express": "^4.14.0"
+  }
 }
