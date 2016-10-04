@@ -5,7 +5,7 @@
     "logFileName" : "output.log",
     "level" : {
       "console" : "debug",
-      "file" : "warn"
+      "file" : "debug"
     },
     "logFileSize" : 5242880
   }

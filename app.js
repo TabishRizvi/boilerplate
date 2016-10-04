@@ -6,6 +6,7 @@
 
 config = require("config");                         // provides global variable config
 require("./lib/logging");                           // provides global variable logger
+response = require("./lib/response");
 
 var express = require("express"),
     bodyParser = require("body-parser"),
@@ -16,17 +17,22 @@ var app = express();
 app.use([
     morgan("tiny", { "stream": logger.stream }),
     bodyParser.json(),
-    bodyParser.urlencoded()
+    bodyParser.urlencoded({ extended : true})
 ]);
 
 
+app.use("/v1",require("./routes/v1"));
 
 app.use(function (req,res) {
-    console.log(req.headers);
-    console.log(req.host);
-    console.log(req.origin);
-    res.set("Location","http://facebook.com");
-    res.status(301).send("hi2");
+    logger.info("here");
+    response.sendSuccessResponse(res,"TASK_DONE");
+});
+
+
+
+app.use(function (err,req,res,next) {
+    logger.error(err.stack);
+    response.sendServerError(res);
 });
 
 
@@ -34,5 +40,6 @@ app.set('port',config.get("port"));
 app.set('etag',false);
 
 app.listen(app.get('port'),function(){
-    console.log("Server running on port\t===============>\t",app.get('port'));
+    logger.info("Server started .......");
+    logger.info("Port No : "+app.get('port'));
 });
